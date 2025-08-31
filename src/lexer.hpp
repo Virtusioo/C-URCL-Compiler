@@ -40,7 +40,7 @@ enum class TokenType
     DECREMENT,
     DOT,
     COMMA,
-    
+
     OPENPAREN,
     CLOSEPAREN,
     OPENBRACE,
@@ -89,7 +89,6 @@ private:
     TokenType LexSymbol();
 
     void AppendChar() { buffer += Eat(); }
-    std::string&& GetValue() { return std::move(buffer); }
 
     bool Appendable(char c) {
         if (At() == c) {

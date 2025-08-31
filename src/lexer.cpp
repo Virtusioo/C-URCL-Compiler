@@ -57,6 +57,7 @@ void Lexer::AppendEscape()
         escape_char('r', '\r');
     }
     // Treat it as a character: '\x' -> 'x'
+    // You get the character instead of an error (to be simple)
     AppendChar();
 }
 
