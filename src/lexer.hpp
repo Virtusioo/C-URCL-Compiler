@@ -67,8 +67,8 @@ public:
 
 private:
     std::vector<Token> tokens;
-    const char* src;
     std::string buffer;
+    const char* src;
     size_t pos;
     size_t line;
     size_t lastCol;

@@ -57,7 +57,7 @@ void Lexer::AppendEscape()
         escape_char('r', '\r');
     }
     // Treat it as a character: '\x' -> 'x'
-    // You get the character instead of an error (to be simple)
+    // You get the character instead of an error (good enough)
     AppendChar();
 }
 
@@ -171,6 +171,9 @@ TokenType Lexer::LexSymbol()
             }
             return TokenType::MINUS;
         } 
+        case '/': return TokenType::SLASH;
+        case '*': return TokenType::STAR;
+        case '%': return TokenType::PERCENT;
         case '(': return TokenType::OPENPAREN;
         case ')': return TokenType::CLOSEPAREN;
         case '{': return TokenType::OPENBRACE;
@@ -224,6 +227,9 @@ std::vector<Token> Lexer::Tokenize(const char* source)
             }
         }
     }
+
+    buffer = "(eof)";
+    PushToken(TokenType::END_OF_FILE);
 
     return std::move(tokens);
 }
