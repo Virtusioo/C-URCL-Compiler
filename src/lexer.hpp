@@ -53,11 +53,18 @@ enum class TokenType
     ASSIGN
 };
 
+struct Span
+{
+    size_t line;
+    size_t col;
+};
+
 struct Token
 {
     TokenType type;
     std::string value;
-    size_t line, col;
+    Span span;
+    size_t colEnd;
 };
 
 class Lexer
@@ -70,9 +77,8 @@ private:
     std::string buffer;
     const char* src;
     size_t pos;
-    size_t line;
-    size_t lastCol;
     size_t col;
+    Span span;
 
     // Source Methods
     char At() const { return src[pos]; }
@@ -99,6 +105,6 @@ private:
     }
     void PushToken(TokenType type)
     {
-        tokens.emplace_back(Token{type, std::move(buffer), line, lastCol});
+        tokens.emplace_back(Token{type, std::move(buffer), span, col});
     }
 };

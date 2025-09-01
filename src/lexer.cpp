@@ -31,7 +31,7 @@ static TokenType GetTokenType(const std::string& value)
 void Lexer::Advance()
 {
     if (src[pos] == '\n') {
-        line += 1;
+        span.line += 1;
         col = 0;
     }
     col += 1;
@@ -189,14 +189,13 @@ std::vector<Token> Lexer::Tokenize(const char* source)
 {
     src = source;
     pos = 0;
-    line = 1;
+    span = {1, 1};
     col = 1;
-    lastCol = 1;
 
     while (At() != '\0') {
 
         // Capture the token's column.
-        lastCol = col; 
+        span.col = col; 
 
         switch (At()) {
             case ' ':

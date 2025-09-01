@@ -3,12 +3,6 @@
 
 #include "ast.hpp"
 
-struct Span
-{
-    size_t line;
-    size_t col;
-};
-
 class Parser
 {
 public:
@@ -22,6 +16,7 @@ private:
 
     // Parser Methods
     NodePtr ParsePrimary();
+    NodePtr ParseMult();
     NodePtr ParseAdd();
 
     // Parser Root Methods
@@ -34,12 +29,14 @@ private:
     Token* Eat() { return &tokens[pos++]; }
     TokenType Type() const { return tokens[pos].type; }
     bool NotEnd() const { return Type() != TokenType::END_OF_FILE; }
+    void PushSpan() { spanStack.push_back(At()->span); }
 
     // Node Methods
     NodePtr MakeNode(NodeType type, NodeValue&& value)
     {
         Span& span = spanStack.back();
+        Token* endToken = At();
         spanStack.pop_back();
-        return std::make_unique<Node>(type, std::move(value), span.line, span.col);
+        return std::make_unique<Node>(type, std::move(value), span.line, span.col, endToken->colEnd);
     }
 };

@@ -39,10 +39,12 @@ struct Node
     NodeValue value;
     size_t line;
     size_t col;
+    size_t colEnd;
 
-    Node(NodeType t, NodeValue&& v, size_t l, size_t c)
+    Node(NodeType t, NodeValue&& v, size_t l, size_t c, size_t ce)
         : type(t), 
           value(std::move(v)), 
           line(l), 
-          col(c) {}
+          col(c),
+          colEnd(ce) {}
 };

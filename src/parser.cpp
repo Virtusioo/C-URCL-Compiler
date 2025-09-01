@@ -9,16 +9,46 @@
 
 NodePtr Parser::ParsePrimary()
 {
+    PushSpan();
+    switch (Type()) {
+        case TokenType::STRING:
+            return MakeNode(NodeType::STRING, Eat()->value);
+        
+    }
     return MakeNode(NodeType::INVALID, "unexpected primary");
+}
+
+NodePtr Parser::ParseMult()
+{
+    PushSpan();
+    NodePtr left = ParsePrimary();
+
+    while (
+        Type() == TokenType::STAR || 
+        Type() == TokenType::SLASH ||
+        Type() == TokenType::PERCENT
+    ) {
+        TokenType op = Eat()->type;
+        NodePtr right = ParsePrimary();
+
+        left = MakeNode(NodeType::BINOP, NodeBinop{
+            std::move(left),
+            std::move(right),
+            op
+        });
+    }
+
+    return left;
 }
 
 NodePtr Parser::ParseAdd()
 {
-    NodePtr left = ParsePrimary();
+    PushSpan();
+    NodePtr left = ParseMult();
 
     while (Type() == TokenType::PLUS || Type() == TokenType::MINUS) {
         TokenType op = Eat()->type;
-        NodePtr right = ParsePrimary();
+        NodePtr right = ParseMult();
 
         left = MakeNode(NodeType::BINOP, NodeBinop{
             std::move(left),
@@ -33,7 +63,7 @@ NodePtr Parser::ParseAdd()
 
 NodePtr Parser::ParseExpr()
 {
-    return ParsePrimary();
+    return ParseAdd();
 }
 
 NodePtr Parser::ParseStmt()
