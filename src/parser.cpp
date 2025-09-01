@@ -12,7 +12,7 @@ NodePtr Parser::ParsePrimary()
     PushSpan();
     switch (Type()) {
         case TokenType::STRING:
-            return MakeNode(NodeType::STRING, Eat()->value);
+            return MakeNode(NodeType::STRING, Eat().value);
         
     }
     return MakeNode(NodeType::INVALID, "unexpected primary");
@@ -28,7 +28,7 @@ NodePtr Parser::ParseMult()
         Type() == TokenType::SLASH ||
         Type() == TokenType::PERCENT
     ) {
-        TokenType op = Eat()->type;
+        TokenType op = Eat().type;
         NodePtr right = ParsePrimary();
 
         left = MakeNode(NodeType::BINOP, NodeBinop{
@@ -47,7 +47,7 @@ NodePtr Parser::ParseAdd()
     NodePtr left = ParseMult();
 
     while (Type() == TokenType::PLUS || Type() == TokenType::MINUS) {
-        TokenType op = Eat()->type;
+        TokenType op = Eat().type;
         NodePtr right = ParseMult();
 
         left = MakeNode(NodeType::BINOP, NodeBinop{
