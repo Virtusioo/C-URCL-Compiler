@@ -8,14 +8,23 @@ using TokenRecord = std::unordered_map<std::string, TokenType>;
 // Token Record
 
 static TokenRecord tokenRecord = {
-    {"struct", TokenType::STRUCT},
-    {"typedef", TokenType::TYPEDEF},
-    {"float", TokenType::FLOAT},
-    {"int", TokenType::INT},
-    {"char", TokenType::CHAR},
-    {"void", TokenType::VOID},
-    {"long", TokenType::LONG},
-    {"unsigned", TokenType::UNSIGNED}
+    {"class", TokenType::CLASS},
+    {"union", TokenType::UNION},
+    {"static", TokenType::STATIC},
+    
+    {"U0", TokenType::TYPE_NAME},
+    {"U8", TokenType::TYPE_NAME},
+    {"U16", TokenType::TYPE_NAME},
+    {"U32", TokenType::TYPE_NAME},
+
+    {"I8", TokenType::TYPE_NAME},
+    {"I16", TokenType::TYPE_NAME},
+    {"I32", TokenType::TYPE_NAME},
+
+    {"F16", TokenType::TYPE_NAME},
+    {"F32", TokenType::TYPE_NAME},
+
+    {"Bool", TokenType::TYPE_NAME}
 };
 
 static TokenType GetTokenType(const std::string& value)
@@ -116,7 +125,7 @@ void Lexer::LexNumber()
 
     if (At() == '.') {
         AppendChar();
-        numType = TokenType::DOUBLE_LITERAL;
+        numType = TokenType::FLOAT_LITERAL; // no double in URCL
     }
 
     while (isdigit(At())) 

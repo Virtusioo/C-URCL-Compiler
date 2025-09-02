@@ -4,28 +4,21 @@
 #include <string>
 #include <vector>
 
-enum class TokenType
+enum class TokenType: char
 {
     IDENT,
     STRING,
     INT_LITERAL,
     FLOAT_LITERAL,
-    DOUBLE_LITERAL,
     CHAR_LITERAL,
     END_OF_FILE,
     INVALID,
 
-    UNSIGNED,
-    INT,
-    FLOAT,
-    CHAR,
-    LONG,
-    DOUBLE,
-    VOID,
+    TYPE_NAME,
 
-    STRUCT,
     UNION,
-    TYPEDEF,
+    CLASS,
+    STATIC,
 
     STAR,
     SLASH,

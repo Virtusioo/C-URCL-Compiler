@@ -5,12 +5,39 @@
 
 #include <variant>
 #include <memory>
+#include <optional>
+
+struct DeclInfo
+{
+    size_t ptrs;
+    std::string value;
+};
+
+struct VarDeclInfo
+{
+    std::string type;
+    std::optional<DeclInfo> name;
+};
+
+enum class StructAttrType
+{
+    CLASS,
+    UNION,
+    DECL
+};
+
+using StructAttrValue = std::variant<VarDeclInfo, std::vector<VarDeclInfo>>;
+
+struct StructAttr
+{
+    StructAttrType type;
+    StructAttrValue value;
+};
 
 enum class NodeType
 {
     FLOAT,
     INTEGER,
-    DOUBLE,
     STRING,
     INVALID,
 
