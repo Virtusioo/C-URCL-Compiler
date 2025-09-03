@@ -21,6 +21,7 @@ static TokenRecord tokenRecord = {
     {"I16", TokenType::TYPE_NAME},
     {"I32", TokenType::TYPE_NAME},
 
+    {"F8", TokenType::TYPE_NAME},
     {"F16", TokenType::TYPE_NAME},
     {"F32", TokenType::TYPE_NAME},
 

@@ -1,1 +1,1 @@
-<img src="C_ProgrammingLanguage.webp">
+<img src="HolyC.webp">
